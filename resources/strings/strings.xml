@@ -1,0 +1,37 @@
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <string id="AppName">Japanese Walk</string>
+
+    <string id="MenuTitleMain">Japanese Walk</string>
+    <string id="MenuItemStart">Kaishi Walk</string>
+    <string id="MenuItemSettings">Settings</string>
+
+    <string id="MenuTitleSettings">Settings</string>
+    <string id="MenuItemTargetType">Target</string>
+    <string id="MenuItemTargetTime">Target time</string>
+    <string id="MenuItemTargetDistance">Target dist</string>
+    <string id="MenuItemInterval">Interval</string>
+    <string id="MenuItemVibration">Vibration</string>
+    <string id="MenuItemSound">Sound</string>
+
+    <string id="LabelTime">Time</string>
+    <string id="LabelDistance">Distance</string>
+    <string id="LabelFastWalk">FAST WALK</string>
+    <string id="LabelSlowWalk">SLOW WALK</string>
+    <string id="LabelPaused">PAUSED</string>
+    <string id="LabelLap">Lap</string>
+    <string id="LabelHR">HR</string>
+    <string id="LabelDist">DIST</string>
+    <string id="LabelTotal">TIME</string>
+    <string id="LabelSummary">Workout Saved</string>
+    <string id="LabelSummaryDiscarded">Workout Discarded</string>
+    <string id="LabelIntervals">Intervals</string>
+    <string id="LabelAvgHR">Avg HR</string>
+    <string id="LabelCalories">Calories</string>
+    <string id="LabelSaveWorkout">Save workout?</string>
+    <string id="LabelMin">min</string>
+    <string id="LabelKm">km</string>
+    <string id="LabelBpm">bpm</string>
+    <string id="LabelKcal">kcal</string>
+    <string id="LabelSelectSave">SELECT to save</string>
+    <string id="LabelStart">KAISHI</string>
+</strings>
