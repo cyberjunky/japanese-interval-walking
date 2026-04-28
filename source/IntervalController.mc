@@ -4,6 +4,7 @@ import Toybox.System;
 import Toybox.Attention;
 import Toybox.Activity;
 import Toybox.ActivityRecording;
+import Toybox.Position;
 import Toybox.WatchUi;
 
 module Phase {
@@ -33,6 +34,7 @@ class IntervalController {
     private var _targetType as Number;
     private var _targetTime as Number;
     private var _targetDistance as Number;
+    private var _gpsEnabled as Boolean;
     private var _onTickCb as Method?;
     private var _onFinishCb as Method?;
 
@@ -55,6 +57,7 @@ class IntervalController {
         _targetType = Settings.getTargetType();
         _targetTime = Settings.getTargetTime();
         _targetDistance = Settings.getTargetDistance();
+        _gpsEnabled = false;
     }
 
     function setCallbacks(onTick as Method, onFinish as Method) as Void {
@@ -64,10 +67,11 @@ class IntervalController {
 
     function start() as Void {
         if (running) { return; }
+        ensureGpsTracking();
         if (_session == null && Toybox has :ActivityRecording) {
             try {
                 _session = ActivityRecording.createSession({
-                    :name => "Interval Walk",
+                    :name => buildSessionName(),
                     :sport => Activity.SPORT_WALKING,
                     :subSport => Activity.SUB_SPORT_GENERIC
                 });
@@ -132,6 +136,7 @@ class IntervalController {
     function stop(save as Boolean) as Void {
         if (finished) { return; }
         snapshotFinalStats();
+        disableGpsTracking();
         running = false;
         finished = true;
         if (_timer != null) {
@@ -254,6 +259,40 @@ class IntervalController {
                 finalCalories = info.calories as Number;
             }
         }
+    }
+
+    function buildSessionName() as String {
+        // Keep the title short and stable. Garmin Connect can derive the visible location
+        // from the recorded GPS track, but Connect IQ does not provide reverse geocoding.
+        return "Japanese Walk";
+    }
+
+    function ensureGpsTracking() as Void {
+        if (_gpsEnabled) { return; }
+        if (!(Toybox has :Position)) { return; }
+
+        try {
+            if (Position has :LOCATION_CONTINUOUS) {
+                Position.enableLocationEvents(Position.LOCATION_CONTINUOUS, method(:onPositionUpdate));
+                _gpsEnabled = true;
+            }
+        } catch (e) {
+            _gpsEnabled = false;
+        }
+    }
+
+    function disableGpsTracking() as Void {
+        if (!_gpsEnabled) { return; }
+        try {
+            Position.enableLocationEvents(Position.LOCATION_DISABLE, null);
+        } catch (e) {
+        }
+        _gpsEnabled = false;
+    }
+
+    function onPositionUpdate(info as Position.Info) as Void {
+        // The recording session persists the GPS track; this callback only keeps
+        // positioning active while the workout is running.
     }
 
     function phaseRemaining() as Number {
