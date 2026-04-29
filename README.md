@@ -38,42 +38,18 @@ Main workout states and menus:
 
 ![Settings screen](screenshots/settings.png)
 
-## Build
-
-Requirements:
-
-- Garmin Connect IQ SDK
-- Java JDK 21
-- Garmin Monkey C VS Code extension
-- Garmin developer key stored locally
-
-Example build:
-
-```powershell
-Push-Location "c:\Users\ronkl\Development\Japanese Interval Walking\JapaneseIntervalWalking"
-& "C:\Program Files\Eclipse Adoptium\jdk-21.0.10.7-hotspot\bin\java.exe" \
-  '-Xms1g' \
-  '-Dfile.encoding=UTF-8' \
-  '-Dapple.awt.UIElement=true' \
-  '-jar' 'c:\Users\ronkl\AppData\Roaming\Garmin\ConnectIQ\Sdks\connectiq-sdk-win-9.1.0-2026-03-09-6a872a80b\bin\monkeybrains.jar' \
-  '-o' 'c:\Users\ronkl\Development\Japanese Interval Walking\JapaneseIntervalWalking\JapaneseIntervalWalking.prg' \
-  '-f' 'c:\Users\ronkl\Development\Japanese Interval Walking\JapaneseIntervalWalking\monkey.jungle' \
-  '-y' 'c:\Users\ronkl\Development\Japanese Interval Walking\JapaneseIntervalWalking\developer_key' \
-  '-d' 'venu445mm' \
-  '-w'
-Pop-Location
-```
-
-## Install
-
-Copy the built `.prg` file to `GARMIN/APPS/` on the watch over USB, or install it through the Connect IQ development workflow.
-
 ## Support
 
 If the app is useful, a small donation or tip is appreciated and helps justify continued polish, testing, and device support.
 
+[![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge&logo=paypal)](https://www.paypal.me/cyberjunkynl/)
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-GitHub-red.svg?style=for-the-badge&logo=github)](https://github.com/sponsors/cyberjunky)
+
+- Star this repository
+- [Report issues](https://github.com/cyberjunky/japanese-interval-walking/issues)
+- Share with other Garmin users
+
 ## Notes
 
-- The developer key stays local and is excluded from git.
 - The app records the activity name as `Japanese Walk`.
 - GPS is enabled during workouts to improve saved route and map data.
