@@ -54,7 +54,7 @@ class WorkoutView extends WatchUi.View {
         var rem = controller.phaseRemaining();
         var remStr = formatMMSS(rem);
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(w / 2, (h * 0.22).toNumber(), Graphics.FONT_NUMBER_HOT, remStr, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(w / 2, (h * 0.20).toNumber(), Graphics.FONT_NUMBER_HOT, remStr, Graphics.TEXT_JUSTIFY_CENTER);
 
         var info = Activity.getActivityInfo();
         var totalStr = formatMMSS(controller.totalElapsed);
@@ -67,11 +67,12 @@ class WorkoutView extends WatchUi.View {
             ? controller.lapCount.format("%d") + "/" + totalSecs.format("%d")
             : controller.lapCount.format("%d") + "/?";
 
-        var leftColX = (w * 0.27).toNumber();
-        var rightColX = (w * 0.73).toNumber();
-        var row1Y = (h * 0.63).toNumber();
-        var row2Y = (h * 0.78).toNumber();
-        var footerY = (h * 0.90).toNumber();
+        var leftColX = (w * 0.23).toNumber();
+        var rightColX = (w * 0.77).toNumber();
+        var row1Y = (h * 0.57).toNumber();
+        var row2Y = (h * 0.74).toNumber();
+        var footerY = (h * 0.87).toNumber();
+        var iconCenterY = (h * 0.66).toNumber();
 
         drawMetric(dc, leftColX, row1Y, "TIME", totalStr);
         drawMetric(dc, rightColX, row1Y, "KM", distStr);
@@ -84,16 +85,16 @@ class WorkoutView extends WatchUi.View {
         dc.drawText(w / 2, footerY, pickMetricFont(), sectionStr, Graphics.TEXT_JUSTIFY_CENTER);
 
         if (!controller.running && !controller.finished) {
-            drawPauseIcon(dc, w / 2, (h * 0.41).toNumber(), phaseColor);
+            drawPauseIcon(dc, w / 2, iconCenterY, phaseColor);
         } else {
-            drawPhaseIcon(dc, w / 2, (h * 0.46).toNumber(), 76, fast);
+            drawPhaseIcon(dc, w / 2, iconCenterY, 112, fast);
         }
     }
 
     function drawMetric(dc as Dc, centerX as Number, y as Number, label as String?, value as String) as Void {
         if (label != null) {
             dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(centerX, y - 24, Graphics.FONT_XTINY, label as String, Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(centerX, y - 28, Graphics.FONT_XTINY, label as String, Graphics.TEXT_JUSTIFY_CENTER);
         }
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
         dc.drawText(centerX, y, pickMetricFont(), value, Graphics.TEXT_JUSTIFY_CENTER);
@@ -108,14 +109,10 @@ class WorkoutView extends WatchUi.View {
     }
 
     function drawPauseIcon(dc as Dc, cx as Number, cy as Number, color as Number) as Void {
-        var barHeight = 24;
-        var barWidth = 8;
-        var gap = 8;
-        var top = cy - (barHeight / 2);
-
-        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle(cx - gap - barWidth, top, barWidth, barHeight);
-        dc.fillRectangle(cx + gap, top, barWidth, barHeight);
+        var icon = WatchUi.loadResource(Rez.Drawables.PauseIcon);
+        var size = 70;
+        var half = size / 2;
+        dc.drawScaledBitmap(cx - half, cy - half, size, size, icon);
     }
 
     function drawPhaseIcon(dc as Dc, cx as Number, cy as Number, size as Number, fast as Boolean) as Void {
