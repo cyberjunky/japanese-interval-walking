@@ -1,4 +1,4 @@
-# Japanese Walk Store Copy
+# Japanese Walking
 
 ## Short Description
 
@@ -6,7 +6,7 @@ Japanese-style interval walking with clear fast/slow phases, section progress, a
 
 ## Full Description
 
-Japanese Walk is a simple interval walking app for Garmin watches inspired by Japanese interval walking training.
+Japanese Walking is a simple interval walking app for Garmin watches inspired by Japanese interval walking training.
 
 The workout alternates between fast and slow walking blocks and keeps the session readable at a glance with a large countdown timer, a phase icon, and a section ring around the edge of the watch face.
 
@@ -37,4 +37,5 @@ When the workout is saved, the app records a FIT activity as `Japanese Walk`. On
 
 ## Donation Text
 
-If you enjoy Japanese Walk and want to support continued improvements, device testing, and future updates, a small donation is appreciated.
+If you enjoy this Japanese Walking app and want to support continued improvements, device testing, and future updates, a small donation is appreciated using the buttons on my support page.
+You can also use it to report bugs or share ideas.

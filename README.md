@@ -1,6 +1,6 @@
-# Japanese Walk
+# Japanese Walking
 
-Japanese Walk is a Garmin Connect IQ watch app for Japanese-style interval walking: alternating fast and slow walking blocks with a clear watchface layout and saved FIT activity recording.
+Japanese Walking is a Garmin Connect IQ watch app for Japanese-style interval walking: alternating fast and slow walking blocks with a clear watchface layout and saved FIT activity recording.
 
 ## Features
 
