@@ -17,11 +17,18 @@
     <string id="LabelDistance">Distance</string>
     <string id="LabelFastWalk">FAST WALK</string>
     <string id="LabelSlowWalk">SLOW WALK</string>
+    <string id="LabelPhaseFast">Fast (Hayaku)</string>
+    <string id="LabelPhaseSlow">Slow (Yukkuri)</string>
     <string id="LabelPaused">PAUSED</string>
     <string id="LabelLap">Lap</string>
+    <string id="LabelLaps">Laps</string>
     <string id="LabelHR">HR</string>
     <string id="LabelDist">DIST</string>
     <string id="LabelTotal">TIME</string>
+    <string id="LabelKmShort">KM</string>
+    <string id="LabelKcalShort">KCAL</string>
+    <string id="LabelSection">SECTION</string>
+    <string id="LabelWorkout">Workout</string>
     <string id="LabelSummary">Workout Saved</string>
     <string id="LabelSummaryDiscarded">Workout Discarded</string>
     <string id="LabelIntervals">Intervals</string>
@@ -32,6 +39,7 @@
     <string id="LabelKm">km</string>
     <string id="LabelBpm">bpm</string>
     <string id="LabelKcal">kcal</string>
+    <string id="LabelUpDown">UP +   DOWN -</string>
     <string id="LabelSelectSave">SELECT to save</string>
     <string id="LabelStart">KAISHI</string>
 </strings>

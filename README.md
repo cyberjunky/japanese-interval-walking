@@ -1,33 +1,29 @@
 # Japanese Walk
 
-Japanese interval walking app for Garmin Connect IQ watches.
+Japanese Walk is a Garmin Connect IQ watch app for Japanese-style interval walking: alternating fast and slow walking blocks with a clear watchface layout and saved FIT activity recording.
 
-## Overview
+## Features
 
-This project implements a simple alternating walking workout:
+- Alternating fast and slow walking intervals
+- Large countdown timer with clear phase icon
+- Section ring progress around the watch edge
+- Live workout metrics for time, distance, heart rate, and calories
+- Saved FIT activity with route support when GPS is available
 
-- Fast interval
-- Slow interval
-- Repeating section ring around the watch edge
-- Saved FIT activity with calories, laps, and workout summary
+## Device Support
 
-## Project Layout
+The manifest currently targets recent Garmin watch families including Venu, vivoactive, Forerunner, and fēnix models.
 
-- `source/` application logic and views
-- `resources/` strings and drawable assets
-- `manifest.xml` Connect IQ manifest
-- `monkey.jungle` project entry for Monkey C builds
+## Build
 
-## Requirements
+Requirements:
 
 - Garmin Connect IQ SDK
 - Java JDK 21
 - Garmin Monkey C VS Code extension
-- Garmin developer key
+- Garmin developer key stored locally
 
-## Build
-
-Example manual build for the real Venu 4 45mm target:
+Example build:
 
 ```powershell
 Push-Location "c:\Users\ronkl\Development\Japanese Interval Walking\JapaneseIntervalWalking"
@@ -44,12 +40,16 @@ Push-Location "c:\Users\ronkl\Development\Japanese Interval Walking\JapaneseInte
 Pop-Location
 ```
 
-## Install on Watch
+## Install
 
-Copy the built `.prg` file to the watch `GARMIN/APPS/` folder over USB.
+Copy the built `.prg` file to `GARMIN/APPS/` on the watch over USB, or install it through the Connect IQ development workflow.
+
+## Support
+
+If the app is useful, a small donation or tip is appreciated and helps justify continued polish, testing, and device support.
 
 ## Notes
 
-- The repository excludes local build outputs and the developer key.
-- The app records a FIT activity as `Japanese Walk`.
-- GPS tracking is explicitly enabled during the workout to improve saved route/map data.
+- The developer key stays local and is excluded from git.
+- The app records the activity name as `Japanese Walk`.
+- GPS is enabled during workouts to improve saved route and map data.

@@ -1,6 +1,6 @@
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <bitmap id="LauncherIcon" filename="launcher_icon.svg" dithering="none" />
     <bitmap id="RabbitIcon" filename="rabbit_icon.svg" dithering="none" />
-    <bitmap id="TurtleIcon" filename="turtle_icon.svg" dithering="none" />
+    <bitmap id="SnailIcon" filename="snail_icon.svg" dithering="none" />
     <bitmap id="PauseIcon" filename="pause_icon.svg" dithering="none" />
 </drawables>

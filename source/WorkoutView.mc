@@ -47,7 +47,7 @@ class WorkoutView extends WatchUi.View {
         var totalSecs = controller.totalSections();
         drawSectionRing(dc, controller.lapCount, totalSecs);
 
-        var phaseText = fast ? "Fast (Hayaku)" : "Slow (Yukkuri)";
+        var phaseText = fast ? stringResource(Rez.Strings.LabelPhaseFast) : stringResource(Rez.Strings.LabelPhaseSlow);
         dc.setColor(phaseColor, Graphics.COLOR_TRANSPARENT);
         dc.drawText(w / 2, (h * 0.135).toNumber(), pickPhaseFont(), phaseText, Graphics.TEXT_JUSTIFY_CENTER);
 
@@ -74,13 +74,13 @@ class WorkoutView extends WatchUi.View {
         var footerY = (h * 0.87).toNumber();
         var iconCenterY = (h * 0.66).toNumber();
 
-        drawMetric(dc, leftColX, row1Y, "TIME", totalStr);
-        drawMetric(dc, rightColX, row1Y, "KM", distStr);
-        drawMetric(dc, leftColX, row2Y, "HR", hrStr);
-        drawMetric(dc, rightColX, row2Y, "KCAL", calStr);
+        drawMetric(dc, leftColX, row1Y, stringResource(Rez.Strings.LabelTotal), totalStr);
+        drawMetric(dc, rightColX, row1Y, stringResource(Rez.Strings.LabelKmShort), distStr);
+        drawMetric(dc, leftColX, row2Y, stringResource(Rez.Strings.LabelHR), hrStr);
+        drawMetric(dc, rightColX, row2Y, stringResource(Rez.Strings.LabelKcalShort), calStr);
 
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(w / 2, footerY - 24, Graphics.FONT_XTINY, "SECTION", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(w / 2, footerY - 24, Graphics.FONT_XTINY, stringResource(Rez.Strings.LabelSection), Graphics.TEXT_JUSTIFY_CENTER);
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
         dc.drawText(w / 2, footerY, pickMetricFont(), sectionStr, Graphics.TEXT_JUSTIFY_CENTER);
 
@@ -104,6 +104,10 @@ class WorkoutView extends WatchUi.View {
         return (_phaseFont != null) ? _phaseFont : Graphics.FONT_SMALL;
     }
 
+    function stringResource(resourceId) as String {
+        return WatchUi.loadResource(resourceId) as String;
+    }
+
     function pickMetricFont() {
         return (_metricFont != null) ? _metricFont : Graphics.FONT_TINY;
     }
@@ -116,7 +120,7 @@ class WorkoutView extends WatchUi.View {
     }
 
     function drawPhaseIcon(dc as Dc, cx as Number, cy as Number, size as Number, fast as Boolean) as Void {
-        var iconRes = fast ? Rez.Drawables.RabbitIcon : Rez.Drawables.TurtleIcon;
+        var iconRes = fast ? Rez.Drawables.RabbitIcon : Rez.Drawables.SnailIcon;
         var icon = WatchUi.loadResource(iconRes);
         var half = size / 2;
         dc.drawScaledBitmap(cx - half, cy - half, size, size, icon);

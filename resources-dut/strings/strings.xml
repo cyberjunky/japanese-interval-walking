@@ -1,0 +1,45 @@
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <string id="AppName">Japanese Walk</string>
+
+    <string id="MenuTitleMain">Japanese Walk</string>
+    <string id="MenuItemStart">Kaishi Walk</string>
+    <string id="MenuItemSettings">Instellingen</string>
+
+    <string id="MenuTitleSettings">Instellingen</string>
+    <string id="MenuItemTargetType">Doel</string>
+    <string id="MenuItemTargetTime">Doeltijd</string>
+    <string id="MenuItemTargetDistance">Doelafstand</string>
+    <string id="MenuItemInterval">Interval</string>
+    <string id="MenuItemVibration">Trillen</string>
+    <string id="MenuItemSound">Geluid</string>
+
+    <string id="LabelTime">Tijd</string>
+    <string id="LabelDistance">Afstand</string>
+    <string id="LabelFastWalk">SNEL WANDELEN</string>
+    <string id="LabelSlowWalk">RUSTIG WANDELEN</string>
+    <string id="LabelPhaseFast">Snel (Hayaku)</string>
+    <string id="LabelPhaseSlow">Rustig (Yukkuri)</string>
+    <string id="LabelPaused">GEPAUZEERD</string>
+    <string id="LabelLap">Ronde</string>
+    <string id="LabelLaps">Rondes</string>
+    <string id="LabelHR">HR</string>
+    <string id="LabelDist">AFST</string>
+    <string id="LabelTotal">TIJD</string>
+    <string id="LabelKmShort">KM</string>
+    <string id="LabelKcalShort">KCAL</string>
+    <string id="LabelSection">SECTIE</string>
+    <string id="LabelWorkout">Training</string>
+    <string id="LabelSummary">Training opgeslagen</string>
+    <string id="LabelSummaryDiscarded">Training verworpen</string>
+    <string id="LabelIntervals">Intervallen</string>
+    <string id="LabelAvgHR">Gem. HR</string>
+    <string id="LabelCalories">Calorieen</string>
+    <string id="LabelSaveWorkout">Training opslaan?</string>
+    <string id="LabelMin">min</string>
+    <string id="LabelKm">km</string>
+    <string id="LabelBpm">bpm</string>
+    <string id="LabelKcal">kcal</string>
+    <string id="LabelUpDown">OMHOOG +   OMLAAG -</string>
+    <string id="LabelSelectSave">SELECT om op te slaan</string>
+    <string id="LabelStart">KAISHI</string>
+</strings>

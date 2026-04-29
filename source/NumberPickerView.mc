@@ -65,10 +65,10 @@ class NumberPickerView extends WatchUi.View {
         dc.drawText(w / 2, (h * 0.36).toNumber(), Graphics.FONT_NUMBER_MEDIUM, text, Graphics.TEXT_JUSTIFY_CENTER);
 
         dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
-        dc.drawText((w * 0.50).toNumber(), (h * 0.65).toNumber(), Graphics.FONT_TINY, "UP +   DOWN -", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText((w * 0.50).toNumber(), (h * 0.65).toNumber(), Graphics.FONT_TINY, WatchUi.loadResource(Rez.Strings.LabelUpDown) as String, Graphics.TEXT_JUSTIFY_CENTER);
 
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(w / 2, (h * 0.82).toNumber(), Graphics.FONT_XTINY, "SELECT to save", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(w / 2, (h * 0.82).toNumber(), Graphics.FONT_XTINY, WatchUi.loadResource(Rez.Strings.LabelSelectSave) as String, Graphics.TEXT_JUSTIFY_CENTER);
     }
 }
 

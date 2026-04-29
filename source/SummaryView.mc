@@ -20,27 +20,27 @@ class SummaryView extends WatchUi.View {
         dc.clear();
 
         dc.setColor(_saved ? Graphics.COLOR_GREEN : Graphics.COLOR_ORANGE, Graphics.COLOR_TRANSPARENT);
-        var header = _saved ? "Workout Saved" : "Workout";
+        var header = _saved ? stringResource(Rez.Strings.LabelSummary) : stringResource(Rez.Strings.LabelWorkout);
         dc.drawText(w / 2, (h * 0.07).toNumber(), Graphics.FONT_SMALL, header, Graphics.TEXT_JUSTIFY_CENTER);
 
         var totalStr = formatMMSS(_controller.totalElapsed);
-        var distStr = (_controller.finalDistance / 1000.0).format("%.2f") + " km";
+        var distStr = (_controller.finalDistance / 1000.0).format("%.2f") + " " + stringResource(Rez.Strings.LabelKm);
         var lapStr = _controller.lapCount.format("%d");
         var hrStr = (_controller.finalAvgHr != null)
-            ? (_controller.finalAvgHr as Number).format("%d") + " bpm"
-            : "-- bpm";
+            ? (_controller.finalAvgHr as Number).format("%d") + " " + stringResource(Rez.Strings.LabelBpm)
+            : "-- " + stringResource(Rez.Strings.LabelBpm);
         var calStr = (_controller.finalCalories != null)
-            ? (_controller.finalCalories as Number).format("%d") + " kcal"
-            : "-- kcal";
+            ? (_controller.finalCalories as Number).format("%d") + " " + stringResource(Rez.Strings.LabelKcal)
+            : "-- " + stringResource(Rez.Strings.LabelKcal);
 
         var startY = (h * 0.22).toFloat();
         var dy = (h * 0.13).toFloat();
 
-        drawRow(dc, w, (startY + 0 * dy).toNumber(), "Time", totalStr);
-        drawRow(dc, w, (startY + 1 * dy).toNumber(), "Distance", distStr);
-        drawRow(dc, w, (startY + 2 * dy).toNumber(), "Laps", lapStr);
-        drawRow(dc, w, (startY + 3 * dy).toNumber(), "Avg HR", hrStr);
-        drawRow(dc, w, (startY + 4 * dy).toNumber(), "Calories", calStr);
+        drawRow(dc, w, (startY + 0 * dy).toNumber(), stringResource(Rez.Strings.LabelTime), totalStr);
+        drawRow(dc, w, (startY + 1 * dy).toNumber(), stringResource(Rez.Strings.LabelDistance), distStr);
+        drawRow(dc, w, (startY + 2 * dy).toNumber(), stringResource(Rez.Strings.LabelLaps), lapStr);
+        drawRow(dc, w, (startY + 3 * dy).toNumber(), stringResource(Rez.Strings.LabelAvgHR), hrStr);
+        drawRow(dc, w, (startY + 4 * dy).toNumber(), stringResource(Rez.Strings.LabelCalories), calStr);
     }
 
     function drawRow(dc as Dc, w as Number, y as Number, label as String, value as String) as Void {
@@ -54,6 +54,10 @@ class SummaryView extends WatchUi.View {
         var m = seconds / 60;
         var s = seconds % 60;
         return m.format("%d") + ":" + s.format("%02d");
+    }
+
+    function stringResource(resourceId) as String {
+        return WatchUi.loadResource(resourceId) as String;
     }
 }
 

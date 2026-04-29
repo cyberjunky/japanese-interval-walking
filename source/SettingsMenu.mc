@@ -6,47 +6,51 @@ module SettingsMenu {
     function build() as WatchUi.Menu2 {
         var menu = new WatchUi.Menu2({ :title => Rez.Strings.MenuTitleSettings });
 
-        var typeLabel = (Settings.getTargetType() == Settings.TARGET_TIME) ? "Time" : "Distance";
-        menu.addItem(new WatchUi.MenuItem("Target", typeLabel, :targetType, {}));
+        var typeLabel = (Settings.getTargetType() == Settings.TARGET_TIME) ? stringResource(Rez.Strings.LabelTime) : stringResource(Rez.Strings.LabelDistance);
+        menu.addItem(new WatchUi.MenuItem(stringResource(Rez.Strings.MenuItemTargetType), typeLabel, :targetType, {}));
 
         menu.addItem(new WatchUi.MenuItem(
-            "Target time",
+            stringResource(Rez.Strings.MenuItemTargetTime),
             formatMinutesLabel(Settings.getTargetTime() / 60),
             :targetTime,
             {}
         ));
 
         menu.addItem(new WatchUi.MenuItem(
-            "Target dist",
+            stringResource(Rez.Strings.MenuItemTargetDistance),
             formatKmLabel(Settings.getTargetDistance() / 100),
             :targetDistance,
             {}
         ));
 
         menu.addItem(new WatchUi.MenuItem(
-            "Interval",
+            stringResource(Rez.Strings.MenuItemInterval),
             formatMinutesLabel(Settings.getIntervalDuration() / 60),
             :intervalDuration,
             {}
         ));
 
         menu.addItem(new WatchUi.ToggleMenuItem(
-            "Vibration", null, :vibration, Settings.isVibrationEnabled(), {}
+            stringResource(Rez.Strings.MenuItemVibration), null, :vibration, Settings.isVibrationEnabled(), {}
         ));
         menu.addItem(new WatchUi.ToggleMenuItem(
-            "Sound", null, :sound, Settings.isSoundEnabled(), {}
+            stringResource(Rez.Strings.MenuItemSound), null, :sound, Settings.isSoundEnabled(), {}
         ));
 
         return menu;
     }
 
     function formatMinutesLabel(minutes as Number) as String {
-        return minutes.format("%d") + " min";
+        return minutes.format("%d") + " " + stringResource(Rez.Strings.LabelMin);
     }
 
     function formatKmLabel(hundredsOfMeters as Number) as String {
         var km = hundredsOfMeters / 10.0;
-        return km.format("%.1f") + " km";
+        return km.format("%.1f") + " " + stringResource(Rez.Strings.LabelKm);
+    }
+
+    function stringResource(resourceId) as String {
+        return WatchUi.loadResource(resourceId) as String;
     }
 }
 
@@ -65,14 +69,14 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             var newType = (Settings.getTargetType() == Settings.TARGET_TIME)
                 ? Settings.TARGET_DISTANCE : Settings.TARGET_TIME;
             Settings.setTargetType(newType);
-            item.setSubLabel((newType == Settings.TARGET_TIME) ? "Time" : "Distance");
+            item.setSubLabel((newType == Settings.TARGET_TIME) ? WatchUi.loadResource(Rez.Strings.LabelTime) as String : WatchUi.loadResource(Rez.Strings.LabelDistance) as String);
         } else if (id == :targetTime) {
             _editingItem = item;
             var picker = new NumberPickerView(
-                "Target time",
+                WatchUi.loadResource(Rez.Strings.MenuItemTargetTime) as String,
                 Settings.getTargetTime() / 60,
                 5, 120, 5,
-                "min",
+                WatchUi.loadResource(Rez.Strings.LabelMin) as String,
                 method(:formatMinutes),
                 method(:saveTargetTime)
             );
@@ -80,10 +84,10 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
         } else if (id == :targetDistance) {
             _editingItem = item;
             var picker = new NumberPickerView(
-                "Target dist",
+                WatchUi.loadResource(Rez.Strings.MenuItemTargetDistance) as String,
                 Settings.getTargetDistance() / 100,
                 5, 200, 5,
-                "km",
+                WatchUi.loadResource(Rez.Strings.LabelKm) as String,
                 method(:formatKm),
                 method(:saveTargetDistance)
             );
@@ -91,10 +95,10 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
         } else if (id == :intervalDuration) {
             _editingItem = item;
             var picker = new NumberPickerView(
-                "Interval",
+                WatchUi.loadResource(Rez.Strings.MenuItemInterval) as String,
                 Settings.getIntervalDuration() / 60,
                 1, 10, 1,
-                "min",
+                WatchUi.loadResource(Rez.Strings.LabelMin) as String,
                 method(:formatMinutes),
                 method(:saveIntervalDuration)
             );

@@ -27,7 +27,7 @@ class WorkoutDelegate extends WatchUi.BehaviorDelegate {
         if (c.totalElapsed > 0) {
             c.pause();
             WatchUi.pushView(
-                new WatchUi.Confirmation("Save workout?"),
+                new WatchUi.Confirmation(WatchUi.loadResource(Rez.Strings.LabelSaveWorkout) as String),
                 new SaveConfirmationDelegate(_view),
                 WatchUi.SLIDE_UP
             );
