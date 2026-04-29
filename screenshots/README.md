@@ -1,0 +1,1 @@
+Add Garmin simulator or device screenshots to this folder.

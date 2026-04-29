@@ -14,6 +14,30 @@ Japanese Walking is a Garmin Connect IQ watch app for Japanese-style interval wa
 
 The manifest currently targets recent Garmin watch families including Venu, vivoactive, Forerunner, and fēnix models.
 
+## Screenshots
+
+Main workout states and menus:
+
+### Fast Interval
+
+![Fast interval screen](screenshots/fast.png)
+
+### Slow Interval
+
+![Slow interval screen](screenshots/slow.png)
+
+### Paused Workout
+
+![Paused workout screen](screenshots/pause.png)
+
+### Workout Complete
+
+![Workout complete screen](screenshots/done.png)
+
+### Settings
+
+![Settings screen](screenshots/settings.png)
+
 ## Build
 
 Requirements:
