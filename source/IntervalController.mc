@@ -314,7 +314,7 @@ class IntervalController {
     function buildSessionName() as String {
         // Keep the title short and stable. Garmin Connect can derive the visible location
         // from the recorded GPS track, but Connect IQ does not provide reverse geocoding.
-        return "Japanese Walk";
+        return "Japanese Walking";
     }
 
     function ensureGpsTracking() as Void {
