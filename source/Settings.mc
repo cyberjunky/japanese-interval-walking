@@ -14,8 +14,11 @@ module Settings {
     const KEY_TARGET_DISTANCE = "targetDistance";
     const KEY_VIBRATION = "vibration";
     const KEY_SOUND = "sound";
+    const KEY_WARMUP = "warmup";
+    const KEY_COOLDOWN = "cooldown";
 
     const DEFAULT_INTERVAL_DURATION = 180;
+    const WARMUP_COOLDOWN_DURATION = 300;
     const DEFAULT_TARGET_TIME = 1800;
     const DEFAULT_TARGET_DISTANCE = 3000;
 
@@ -71,5 +74,23 @@ module Settings {
 
     function setSoundEnabled(enabled as Boolean) as Void {
         Application.Storage.setValue(KEY_SOUND, enabled);
+    }
+
+    function isWarmupEnabled() as Boolean {
+        var v = Application.Storage.getValue(KEY_WARMUP);
+        return (v == null) ? true : v as Boolean;
+    }
+
+    function setWarmupEnabled(enabled as Boolean) as Void {
+        Application.Storage.setValue(KEY_WARMUP, enabled);
+    }
+
+    function isCooldownEnabled() as Boolean {
+        var v = Application.Storage.getValue(KEY_COOLDOWN);
+        return (v == null) ? true : v as Boolean;
+    }
+
+    function setCooldownEnabled(enabled as Boolean) as Void {
+        Application.Storage.setValue(KEY_COOLDOWN, enabled);
     }
 }

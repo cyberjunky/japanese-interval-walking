@@ -10,6 +10,8 @@
     <string id="MenuItemTargetTime">Target time</string>
     <string id="MenuItemTargetDistance">Target dist</string>
     <string id="MenuItemInterval">Interval</string>
+    <string id="MenuItemWarmup">Warmup</string>
+    <string id="MenuItemCooldown">Cooldown</string>
     <string id="MenuItemVibration">Vibration</string>
     <string id="MenuItemSound">Sound</string>
 
@@ -19,6 +21,10 @@
     <string id="LabelSlowWalk">SLOW WALK</string>
     <string id="LabelPhaseFast">Fast (Hayaku)</string>
     <string id="LabelPhaseSlow">Slow (Yukkuri)</string>
+    <string id="LabelPhaseWarmup">Warmup</string>
+    <string id="LabelPhaseCooldown">Cooldown</string>
+    <string id="LabelWarmup">WARMUP</string>
+    <string id="LabelCooldown">COOLDOWN</string>
     <string id="LabelPaused">PAUSED</string>
     <string id="LabelLap">Lap</string>
     <string id="LabelLaps">Laps</string>

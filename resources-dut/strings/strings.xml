@@ -10,6 +10,8 @@
     <string id="MenuItemTargetTime">Doeltijd</string>
     <string id="MenuItemTargetDistance">Doelafstand</string>
     <string id="MenuItemInterval">Interval</string>
+    <string id="MenuItemWarmup">Opwarmen</string>
+    <string id="MenuItemCooldown">Afkoelen</string>
     <string id="MenuItemVibration">Trillen</string>
     <string id="MenuItemSound">Geluid</string>
 
@@ -19,6 +21,10 @@
     <string id="LabelSlowWalk">RUSTIG WANDELEN</string>
     <string id="LabelPhaseFast">Snel (Hayaku)</string>
     <string id="LabelPhaseSlow">Rustig (Yukkuri)</string>
+    <string id="LabelPhaseWarmup">Opwarmen</string>
+    <string id="LabelPhaseCooldown">Afkoelen</string>
+    <string id="LabelWarmup">OPWARMEN</string>
+    <string id="LabelCooldown">AFKOELEN</string>
     <string id="LabelPaused">GEPAUZEERD</string>
     <string id="LabelLap">Ronde</string>
     <string id="LabelLaps">Rondes</string>

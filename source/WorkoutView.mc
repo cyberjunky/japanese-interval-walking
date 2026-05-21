@@ -38,16 +38,37 @@ class WorkoutView extends WatchUi.View {
     function onUpdate(dc as Dc) as Void {
         var w = dc.getWidth();
         var h = dc.getHeight();
-        var fast = (controller.phase == Phase.PHASE_FAST);
-        var phaseColor = fast ? Graphics.COLOR_DK_RED : Graphics.COLOR_DK_BLUE;
+        var ph = controller.phase;
+        var fast = (ph == Phase.PHASE_FAST);
+        var isWarmup = (ph == Phase.PHASE_WARMUP);
+        var isCooldown = (ph == Phase.PHASE_COOLDOWN);
+
+        var phaseColor;
+        if (isWarmup) {
+            phaseColor = Graphics.COLOR_ORANGE;
+        } else if (isCooldown) {
+            phaseColor = Graphics.COLOR_DK_GREEN;
+        } else {
+            phaseColor = fast ? Graphics.COLOR_DK_RED : Graphics.COLOR_DK_BLUE;
+        }
+
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_WHITE);
         dc.clear();
 
-        // Section ring drawn first so all text renders on top
-        var totalSecs = controller.totalSections();
-        drawSectionRing(dc, controller.lapCount, totalSecs);
+        // Section ring only shown during active intervals
+        if (!isWarmup && !isCooldown) {
+            var totalSecs = controller.totalSections();
+            drawSectionRing(dc, controller.lapCount, totalSecs);
+        }
 
-        var phaseText = fast ? stringResource(Rez.Strings.LabelPhaseFast) : stringResource(Rez.Strings.LabelPhaseSlow);
+        var phaseText;
+        if (isWarmup) {
+            phaseText = stringResource(Rez.Strings.LabelPhaseWarmup);
+        } else if (isCooldown) {
+            phaseText = stringResource(Rez.Strings.LabelPhaseCooldown);
+        } else {
+            phaseText = fast ? stringResource(Rez.Strings.LabelPhaseFast) : stringResource(Rez.Strings.LabelPhaseSlow);
+        }
         dc.setColor(phaseColor, Graphics.COLOR_TRANSPARENT);
         dc.drawText(w / 2, (h * 0.135).toNumber(), pickPhaseFont(), phaseText, Graphics.TEXT_JUSTIFY_CENTER);
 
@@ -63,9 +84,18 @@ class WorkoutView extends WatchUi.View {
         var hrNow = (info != null && info.currentHeartRate != null) ? info.currentHeartRate as Number : null;
         var hrStr = (hrNow != null) ? (hrNow as Number).format("%d") : "--";
         var calStr = (info != null && info.calories != null) ? (info.calories as Number).format("%d") : "--";
-        var sectionStr = (totalSecs > 0)
-            ? controller.lapCount.format("%d") + "/" + totalSecs.format("%d")
-            : controller.lapCount.format("%d") + "/?";
+
+        var totalSecs = controller.totalSections();
+        var sectionStr;
+        if (isWarmup) {
+            sectionStr = stringResource(Rez.Strings.LabelWarmup);
+        } else if (isCooldown) {
+            sectionStr = stringResource(Rez.Strings.LabelCooldown);
+        } else {
+            sectionStr = (totalSecs > 0)
+                ? controller.lapCount.format("%d") + "/" + totalSecs.format("%d")
+                : controller.lapCount.format("%d") + "/?";
+        }
 
         var leftColX = (w * 0.23).toNumber();
         var rightColX = (w * 0.77).toNumber();
@@ -87,6 +117,8 @@ class WorkoutView extends WatchUi.View {
         var iconSize = (h * 0.25).toNumber();
         if (!controller.running && !controller.finished) {
             drawPauseIcon(dc, w / 2, iconCenterY, (h * 0.155).toNumber(), phaseColor);
+        } else if (isWarmup || isCooldown) {
+            drawTurtleIcon(dc, w / 2, iconCenterY, iconSize);
         } else {
             drawPhaseIcon(dc, w / 2, iconCenterY, iconSize, fast);
         }
@@ -122,6 +154,12 @@ class WorkoutView extends WatchUi.View {
     function drawPhaseIcon(dc as Dc, cx as Number, cy as Number, size as Number, fast as Boolean) as Void {
         var iconRes = fast ? Rez.Drawables.RabbitIcon : Rez.Drawables.SnailIcon;
         var icon = WatchUi.loadResource(iconRes);
+        var half = size / 2;
+        dc.drawScaledBitmap(cx - half, cy - half, size, size, icon);
+    }
+
+    function drawTurtleIcon(dc as Dc, cx as Number, cy as Number, size as Number) as Void {
+        var icon = WatchUi.loadResource(Rez.Drawables.TurtleIcon);
         var half = size / 2;
         dc.drawScaledBitmap(cx - half, cy - half, size, size, icon);
     }

@@ -10,7 +10,9 @@ import Toybox.WatchUi;
 module Phase {
     enum {
         PHASE_FAST = 0,
-        PHASE_SLOW = 1
+        PHASE_SLOW = 1,
+        PHASE_WARMUP = 2,
+        PHASE_COOLDOWN = 3
     }
 }
 
@@ -19,6 +21,7 @@ class IntervalController {
     public var phase as Number;
     public var phaseElapsed as Number;
     public var totalElapsed as Number;
+    public var intervalElapsed as Number;
     public var lapCount as Number;
     public var running as Boolean;
     public var finished as Boolean;
@@ -35,14 +38,19 @@ class IntervalController {
     private var _targetTime as Number;
     private var _targetDistance as Number;
     private var _gpsEnabled as Boolean;
+    private var _warmupEnabled as Boolean;
+    private var _cooldownEnabled as Boolean;
     private var _onTickCb as Method?;
     private var _onFinishCb as Method?;
 
     function initialize() {
-        phase = Phase.PHASE_FAST;
+        _warmupEnabled = Settings.isWarmupEnabled();
+        _cooldownEnabled = Settings.isCooldownEnabled();
+        phase = _warmupEnabled ? Phase.PHASE_WARMUP : Phase.PHASE_FAST;
         phaseElapsed = 0;
         totalElapsed = 0;
-        lapCount = 1;
+        intervalElapsed = 0;
+        lapCount = _warmupEnabled ? 0 : 1;
         running = false;
         finished = false;
         targetReached = false;
@@ -123,7 +131,19 @@ class IntervalController {
     }
 
     function skipPhase() as Void {
-        advancePhase();
+        if (phase == Phase.PHASE_WARMUP) {
+            phase = Phase.PHASE_FAST;
+            phaseElapsed = 0;
+            lapCount = 1;
+            notifyPhaseStart();
+            if (_onTickCb != null) { (_onTickCb as Method).invoke(); }
+        } else if (phase == Phase.PHASE_COOLDOWN) {
+            targetReached = true;
+            playFinishCue();
+            if (_onFinishCb != null) { (_onFinishCb as Method).invoke(); }
+        } else {
+            advancePhase();
+        }
     }
 
     function totalSections() as Number {
@@ -162,18 +182,47 @@ class IntervalController {
         phaseElapsed += 1;
         totalElapsed += 1;
 
+        if (phase == Phase.PHASE_WARMUP) {
+            if (phaseElapsed >= Settings.WARMUP_COOLDOWN_DURATION) {
+                phase = Phase.PHASE_FAST;
+                phaseElapsed = 0;
+                lapCount = 1;
+                notifyPhaseStart();
+            }
+            if (_onTickCb != null) { (_onTickCb as Method).invoke(); }
+            return;
+        }
+
+        if (phase == Phase.PHASE_COOLDOWN) {
+            if (phaseElapsed >= Settings.WARMUP_COOLDOWN_DURATION) {
+                targetReached = true;
+                playFinishCue();
+                if (_onFinishCb != null) { (_onFinishCb as Method).invoke(); }
+                return;
+            }
+            if (_onTickCb != null) { (_onTickCb as Method).invoke(); }
+            return;
+        }
+
+        intervalElapsed += 1;
+
         var targetHit = false;
         if (_targetType == Settings.TARGET_TIME) {
-            if (totalElapsed >= _targetTime) { targetHit = true; }
+            if (intervalElapsed >= _targetTime) { targetHit = true; }
         } else {
             if (currentDistance() >= _targetDistance.toFloat()) { targetHit = true; }
         }
 
         if (targetHit) {
-            targetReached = true;
-            playFinishCue();
-            if (_onFinishCb != null) {
-                (_onFinishCb as Method).invoke();
+            if (_cooldownEnabled) {
+                phase = Phase.PHASE_COOLDOWN;
+                phaseElapsed = 0;
+                notifyPhaseStart();
+                if (_onTickCb != null) { (_onTickCb as Method).invoke(); }
+            } else {
+                targetReached = true;
+                playFinishCue();
+                if (_onFinishCb != null) { (_onFinishCb as Method).invoke(); }
             }
             return;
         }
@@ -216,6 +265,7 @@ class IntervalController {
                     new Attention.VibeProfile(100, 400)
                 ];
             } else {
+                // SLOW, WARMUP, COOLDOWN all get the same gentle pattern
                 pattern = [
                     new Attention.VibeProfile(75, 700),
                     new Attention.VibeProfile(0, 200),
@@ -296,7 +346,10 @@ class IntervalController {
     }
 
     function phaseRemaining() as Number {
-        var r = _intervalDuration - phaseElapsed;
+        var duration = (phase == Phase.PHASE_WARMUP || phase == Phase.PHASE_COOLDOWN)
+            ? Settings.WARMUP_COOLDOWN_DURATION
+            : _intervalDuration;
+        var r = duration - phaseElapsed;
         return r < 0 ? 0 : r;
     }
 

@@ -31,6 +31,12 @@ module SettingsMenu {
         ));
 
         menu.addItem(new WatchUi.ToggleMenuItem(
+            stringResource(Rez.Strings.MenuItemWarmup), null, :warmup, Settings.isWarmupEnabled(), {}
+        ));
+        menu.addItem(new WatchUi.ToggleMenuItem(
+            stringResource(Rez.Strings.MenuItemCooldown), null, :cooldown, Settings.isCooldownEnabled(), {}
+        ));
+        menu.addItem(new WatchUi.ToggleMenuItem(
             stringResource(Rez.Strings.MenuItemVibration), null, :vibration, Settings.isVibrationEnabled(), {}
         ));
         menu.addItem(new WatchUi.ToggleMenuItem(
@@ -103,6 +109,10 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
                 method(:saveIntervalDuration)
             );
             WatchUi.pushView(picker, new NumberPickerDelegate(picker), WatchUi.SLIDE_LEFT);
+        } else if (id == :warmup) {
+            Settings.setWarmupEnabled((item as WatchUi.ToggleMenuItem).isEnabled());
+        } else if (id == :cooldown) {
+            Settings.setCooldownEnabled((item as WatchUi.ToggleMenuItem).isEnabled());
         } else if (id == :vibration) {
             Settings.setVibrationEnabled((item as WatchUi.ToggleMenuItem).isEnabled());
         } else if (id == :sound) {

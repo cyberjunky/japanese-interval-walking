@@ -3,4 +3,5 @@
     <bitmap id="RabbitIcon" filename="rabbit_icon.svg" dithering="none" />
     <bitmap id="SnailIcon" filename="snail_icon.svg" dithering="none" />
     <bitmap id="PauseIcon" filename="pause_icon.svg" dithering="none" />
+    <bitmap id="TurtleIcon" filename="turtle_icon.svg" dithering="none" />
 </drawables>
