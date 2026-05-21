@@ -84,10 +84,11 @@ class WorkoutView extends WatchUi.View {
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
         dc.drawText(w / 2, footerY, pickMetricFont(), sectionStr, Graphics.TEXT_JUSTIFY_CENTER);
 
+        var iconSize = (h * 0.25).toNumber();
         if (!controller.running && !controller.finished) {
-            drawPauseIcon(dc, w / 2, iconCenterY, phaseColor);
+            drawPauseIcon(dc, w / 2, iconCenterY, (h * 0.155).toNumber(), phaseColor);
         } else {
-            drawPhaseIcon(dc, w / 2, iconCenterY, 112, fast);
+            drawPhaseIcon(dc, w / 2, iconCenterY, iconSize, fast);
         }
     }
 
@@ -112,9 +113,8 @@ class WorkoutView extends WatchUi.View {
         return (_metricFont != null) ? _metricFont : Graphics.FONT_TINY;
     }
 
-    function drawPauseIcon(dc as Dc, cx as Number, cy as Number, color as Number) as Void {
+    function drawPauseIcon(dc as Dc, cx as Number, cy as Number, size as Number, color as Number) as Void {
         var icon = WatchUi.loadResource(Rez.Drawables.PauseIcon);
-        var size = 70;
         var half = size / 2;
         dc.drawScaledBitmap(cx - half, cy - half, size, size, icon);
     }
