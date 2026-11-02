@@ -19,12 +19,17 @@ class SummaryView extends WatchUi.View {
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
 
-        dc.setColor(_saved ? Graphics.COLOR_GREEN : Graphics.COLOR_ORANGE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(_saved ? 0x58B368 : 0xF2B01E, Graphics.COLOR_TRANSPARENT);
         var header = _saved ? stringResource(Rez.Strings.LabelSummary) : stringResource(Rez.Strings.LabelWorkout);
-        dc.drawText(w / 2, (h * 0.07).toNumber(), Graphics.FONT_SMALL, header, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(w / 2, (h * 0.12).toNumber(), Graphics.FONT_SMALL, header, Graphics.TEXT_JUSTIFY_CENTER);
 
         var totalStr = formatMMSS(_controller.totalElapsed);
-        var distStr = (_controller.finalDistance / 1000.0).format("%.2f") + " " + stringResource(Rez.Strings.LabelKm);
+        var distStr;
+        if (Settings.isDistanceStatute()) {
+            distStr = (_controller.finalDistance / Settings.METERS_PER_MILE).format("%.2f") + " " + stringResource(Rez.Strings.LabelMi);
+        } else {
+            distStr = (_controller.finalDistance / 1000.0).format("%.2f") + " " + stringResource(Rez.Strings.LabelKm);
+        }
         var lapStr = _controller.lapCount.format("%d");
         var hrStr = (_controller.finalAvgHr != null)
             ? (_controller.finalAvgHr as Number).format("%d") + " " + stringResource(Rez.Strings.LabelBpm)
@@ -33,8 +38,8 @@ class SummaryView extends WatchUi.View {
             ? (_controller.finalCalories as Number).format("%d") + " " + stringResource(Rez.Strings.LabelKcal)
             : "-- " + stringResource(Rez.Strings.LabelKcal);
 
-        var startY = (h * 0.22).toFloat();
-        var dy = (h * 0.13).toFloat();
+        var startY = (h * 0.26).toFloat();
+        var dy = (h * 0.125).toFloat();
 
         drawRow(dc, w, (startY + 0 * dy).toNumber(), stringResource(Rez.Strings.LabelTime), totalStr);
         drawRow(dc, w, (startY + 1 * dy).toNumber(), stringResource(Rez.Strings.LabelDistance), distStr);

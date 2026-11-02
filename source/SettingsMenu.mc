@@ -18,7 +18,7 @@ module SettingsMenu {
 
         menu.addItem(new WatchUi.MenuItem(
             stringResource(Rez.Strings.MenuItemTargetDistance),
-            formatKmLabel(Settings.getTargetDistance() / 100),
+            formatDistanceLabel(Settings.getTargetDistance()),
             :targetDistance,
             {}
         ));
@@ -55,6 +55,13 @@ module SettingsMenu {
         return km.format("%.1f") + " " + stringResource(Rez.Strings.LabelKm);
     }
 
+    function formatDistanceLabel(meters as Number) as String {
+        if (Settings.isDistanceStatute()) {
+            return (meters / Settings.METERS_PER_MILE).format("%.1f") + " " + stringResource(Rez.Strings.LabelMi);
+        }
+        return (meters / 1000.0).format("%.1f") + " " + stringResource(Rez.Strings.LabelKm);
+    }
+
     function stringResource(resourceId) as String {
         return WatchUi.loadResource(resourceId) as String;
     }
@@ -89,15 +96,30 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             WatchUi.pushView(picker, new NumberPickerDelegate(picker), WatchUi.SLIDE_LEFT);
         } else if (id == :targetDistance) {
             _editingItem = item;
-            var picker = new NumberPickerView(
-                WatchUi.loadResource(Rez.Strings.MenuItemTargetDistance) as String,
-                Settings.getTargetDistance() / 100,
-                5, 200, 5,
-                WatchUi.loadResource(Rez.Strings.LabelKm) as String,
-                method(:formatKm),
-                method(:saveTargetDistance)
-            );
-            WatchUi.pushView(picker, new NumberPickerDelegate(picker), WatchUi.SLIDE_LEFT);
+            if (Settings.isDistanceStatute()) {
+                // Picker works in half-miles: 0.5 .. 20 mi in 0.5 mi steps
+                var halfMiles = ((Settings.getTargetDistance() / (Settings.METERS_PER_MILE / 2)) + 0.5).toNumber();
+                if (halfMiles < 1) { halfMiles = 1; }
+                var picker = new NumberPickerView(
+                    WatchUi.loadResource(Rez.Strings.MenuItemTargetDistance) as String,
+                    halfMiles,
+                    1, 40, 1,
+                    WatchUi.loadResource(Rez.Strings.LabelMi) as String,
+                    method(:formatMiles),
+                    method(:saveTargetDistanceMi)
+                );
+                WatchUi.pushView(picker, new NumberPickerDelegate(picker), WatchUi.SLIDE_LEFT);
+            } else {
+                var picker = new NumberPickerView(
+                    WatchUi.loadResource(Rez.Strings.MenuItemTargetDistance) as String,
+                    Settings.getTargetDistance() / 100,
+                    5, 200, 5,
+                    WatchUi.loadResource(Rez.Strings.LabelKm) as String,
+                    method(:formatKm),
+                    method(:saveTargetDistance)
+                );
+                WatchUi.pushView(picker, new NumberPickerDelegate(picker), WatchUi.SLIDE_LEFT);
+            }
         } else if (id == :intervalDuration) {
             _editingItem = item;
             var picker = new NumberPickerView(
@@ -129,6 +151,10 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
         return km.format("%.1f") + " km";
     }
 
+    function formatMiles(halfMiles as Number) as String {
+        return (halfMiles / 2.0).format("%.1f") + " mi";
+    }
+
     function saveTargetTime(value as Number) as Void {
         Settings.setTargetTime(value * 60);
         if (_editingItem != null) {
@@ -137,9 +163,18 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
     }
 
     function saveTargetDistance(value as Number) as Void {
-        Settings.setTargetDistance(value * 100);
+        var meters = value * 100;
+        Settings.setTargetDistance(meters);
         if (_editingItem != null) {
-            (_editingItem as WatchUi.MenuItem).setSubLabel(formatKm(value));
+            (_editingItem as WatchUi.MenuItem).setSubLabel(SettingsMenu.formatDistanceLabel(meters));
+        }
+    }
+
+    function saveTargetDistanceMi(halfMiles as Number) as Void {
+        var meters = (halfMiles * (Settings.METERS_PER_MILE / 2)).toNumber();
+        Settings.setTargetDistance(meters);
+        if (_editingItem != null) {
+            (_editingItem as WatchUi.MenuItem).setSubLabel(SettingsMenu.formatDistanceLabel(meters));
         }
     }
 
@@ -149,4 +184,5 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             (_editingItem as WatchUi.MenuItem).setSubLabel(formatMinutes(value));
         }
     }
+
 }

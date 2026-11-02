@@ -1,5 +1,6 @@
 import Toybox.Application;
 import Toybox.Lang;
+import Toybox.System;
 
 module Settings {
 
@@ -56,6 +57,13 @@ module Settings {
 
     function setTargetDistance(meters as Number) as Void {
         Application.Storage.setValue(KEY_TARGET_DISTANCE, meters);
+    }
+
+    const METERS_PER_MILE = 1609.344;
+
+    // Follows the watch's own unit setting (System > Units > Distance).
+    function isDistanceStatute() as Boolean {
+        return System.getDeviceSettings().distanceUnits == System.UNIT_STATUTE;
     }
 
     function isVibrationEnabled() as Boolean {

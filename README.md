@@ -7,7 +7,8 @@ Japanese Walking is a Garmin Connect IQ watch app for Japanese-style interval wa
 - Alternating fast and slow walking intervals
 - Large countdown timer with clear phase icon
 - Section ring progress around the watch edge
-- Live workout metrics for time, distance, heart rate, and calories
+- Live workout metrics for time, distance, and heart rate (calories on the summary)
+- Distance shown in km or miles, following the watch's unit setting
 - Saved FIT activity with route support when GPS is available
 
 ## Device Support
@@ -18,6 +19,14 @@ The manifest currently targets recent Garmin watch families including Venu, vivo
 
 Main workout states and menus:
 
+### Main Menu
+
+![Main menu](screenshots/menu.png)
+
+### Warmup
+
+![Warmup screen](screenshots/warmup.png)
+
 ### Fast Interval
 
 ![Fast interval screen](screenshots/fast.png)
@@ -25,6 +34,10 @@ Main workout states and menus:
 ### Slow Interval
 
 ![Slow interval screen](screenshots/slow.png)
+
+### Cooldown
+
+![Cooldown screen](screenshots/cooldown.png)
 
 ### Paused Workout
 
