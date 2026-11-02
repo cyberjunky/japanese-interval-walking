@@ -10,6 +10,7 @@ Japanese Walking is a Garmin Connect IQ watch app for Japanese-style interval wa
 - Live workout metrics for time, distance, and heart rate (calories on the summary)
 - Distance shown in km or miles, following the watch's unit setting
 - Saved FIT activity with route support when GPS is available
+- Treadmill mode: records an indoor walk without GPS (distance from wrist movement)
 
 ## Device Support
 

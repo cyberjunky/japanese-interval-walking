@@ -17,6 +17,7 @@ module Settings {
     const KEY_SOUND = "sound";
     const KEY_WARMUP = "warmup";
     const KEY_COOLDOWN = "cooldown";
+    const KEY_INDOOR = "indoor";
 
     const DEFAULT_INTERVAL_DURATION = 180;
     const WARMUP_COOLDOWN_DURATION = 300;
@@ -100,5 +101,16 @@ module Settings {
 
     function setCooldownEnabled(enabled as Boolean) as Void {
         Application.Storage.setValue(KEY_COOLDOWN, enabled);
+    }
+
+    // Treadmill mode: records an indoor walk without GPS; distance comes from
+    // the wrist accelerometer.
+    function isIndoorEnabled() as Boolean {
+        var v = Application.Storage.getValue(KEY_INDOOR);
+        return (v == null) ? false : v as Boolean;
+    }
+
+    function setIndoorEnabled(enabled as Boolean) as Void {
+        Application.Storage.setValue(KEY_INDOOR, enabled);
     }
 }

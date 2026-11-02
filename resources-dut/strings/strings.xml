@@ -14,6 +14,7 @@
     <string id="MenuItemCooldown">Afkoelen</string>
     <string id="MenuItemVibration">Trillen</string>
     <string id="MenuItemSound">Geluid</string>
+    <string id="MenuItemIndoor">Loopband</string>
 
     <string id="LabelTime">Tijd</string>
     <string id="LabelDistance">Afstand</string>

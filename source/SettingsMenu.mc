@@ -42,6 +42,9 @@ module SettingsMenu {
         menu.addItem(new WatchUi.ToggleMenuItem(
             stringResource(Rez.Strings.MenuItemSound), null, :sound, Settings.isSoundEnabled(), {}
         ));
+        menu.addItem(new WatchUi.ToggleMenuItem(
+            stringResource(Rez.Strings.MenuItemIndoor), null, :indoor, Settings.isIndoorEnabled(), {}
+        ));
 
         return menu;
     }
@@ -139,6 +142,8 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             Settings.setVibrationEnabled((item as WatchUi.ToggleMenuItem).isEnabled());
         } else if (id == :sound) {
             Settings.setSoundEnabled((item as WatchUi.ToggleMenuItem).isEnabled());
+        } else if (id == :indoor) {
+            Settings.setIndoorEnabled((item as WatchUi.ToggleMenuItem).isEnabled());
         }
     }
 

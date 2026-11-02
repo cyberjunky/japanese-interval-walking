@@ -40,12 +40,14 @@ class IntervalController {
     private var _gpsEnabled as Boolean;
     private var _warmupEnabled as Boolean;
     private var _cooldownEnabled as Boolean;
+    private var _indoor as Boolean;
     private var _onTickCb as Method?;
     private var _onFinishCb as Method?;
 
     function initialize() {
         _warmupEnabled = Settings.isWarmupEnabled();
         _cooldownEnabled = Settings.isCooldownEnabled();
+        _indoor = Settings.isIndoorEnabled();
         phase = _warmupEnabled ? Phase.PHASE_WARMUP : Phase.PHASE_FAST;
         phaseElapsed = 0;
         totalElapsed = 0;
@@ -75,13 +77,15 @@ class IntervalController {
 
     function start() as Void {
         if (running) { return; }
-        ensureGpsTracking();
+        if (!_indoor) {
+            ensureGpsTracking();
+        }
         if (_session == null && Toybox has :ActivityRecording) {
             try {
                 _session = ActivityRecording.createSession({
                     :name => buildSessionName(),
                     :sport => Activity.SPORT_WALKING,
-                    :subSport => Activity.SUB_SPORT_GENERIC
+                    :subSport => _indoor ? Activity.SUB_SPORT_INDOOR_WALKING : Activity.SUB_SPORT_GENERIC
                 });
             } catch (e) {
                 _session = null;
